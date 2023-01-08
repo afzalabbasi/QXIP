@@ -1,0 +1,19 @@
+Description=QXIP utility service
+ConditionPathExists=/work/src/github.com/afzalabbasi/QXIP
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+Restart=always
+RestartSec=10
+Environment=HEADER=X-Scope-OrgID:0
+Environment=SPEED=1500l/s
+Environment=URL=http://localhost:3100/loki/api/v1/push
+Environment=LOG_LEVEL=error
+WorkingDirectory=/work/src/github.com/afzalabbasi/QXIP
+ExecStart=/work/src/github.com/afzalabbasi/QXIP/QXIP
+
+[Install]
+WantedBy=multi-user.target
