@@ -12,7 +12,6 @@ import (
 // main method validate env variables, set log level and trigger job function every one second.
 func main() {
 	hasValidEnvVariables()
-
 	configureLocalFileSystemHook()
 
 	ticker := time.NewTicker(1 * time.Second)

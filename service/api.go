@@ -15,17 +15,19 @@ func CallLokiPushLogAPI(requestBody []byte) {
 	var retryCount int
 	logrus.Debugln("PushLogLoki API Function Trigger......")
 	url := os.Getenv("URL")
-	header := os.Getenv("HEADER")
 	// Create a HTTP post request
 	r, err := http.NewRequest("POST", url, bytes.NewBuffer(requestBody))
 	if err != nil {
 		logrus.Errorln("Error During Create a HTTP POST Request", err.Error())
 		return
 	}
-	headerInformation := strings.Split(header, ":")
+	headerInfo := os.Getenv("HEADER")
+	header := strings.Split(headerInfo, "|")
+	for _, i := range header {
+		headerInformation := strings.Split(i, ":")
+		r.Header.Add(headerInformation[0], headerInformation[1])
+	}
 	r.Header.Add("Content-Type", "application/json")
-	r.Header.Add(headerInformation[0], headerInformation[1])
-
 	client := &http.Client{}
 	res, err := client.Do(r)
 	if err != nil {
